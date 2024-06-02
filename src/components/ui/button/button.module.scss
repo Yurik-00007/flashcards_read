@@ -33,12 +33,12 @@
   user-select: none;
 
   display: inline-flex;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Этот элемент не будет сжиматься */
   gap: 0.625rem;
   align-items: center;
   justify-content: center;
 
-  box-sizing: border-box;
+  box-sizing: border-box; /* Включаем padding и border в ширину и высоту */
   padding: 0.375rem 1.75rem;
 
   font-size: 1rem;

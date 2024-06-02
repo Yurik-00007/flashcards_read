@@ -6,12 +6,12 @@ const meta = {
   argTypes: {
     variant: {
       control: { type: 'radio' },
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'tertiary', 'link'],
     },
   },
   component: Button,
   tags: ['autodocs'],
-  title: 'Components/Button',
+  title: 'Components/UI/Button',
 } satisfies Meta<typeof Button>
 
 export default meta
@@ -33,6 +33,14 @@ export const Secondary: Story = {
   },
 }
 
+export const Tertiary: Story = {
+  args: {
+    children: 'Tertiary Button',
+    disabled: false,
+    variant: 'tertiary',
+  },
+}
+
 export const FullWidth: Story = {
   args: {
     children: 'Full Width Primary Button',
@@ -46,5 +54,12 @@ export const AsLink: Story = {
     as: 'a',
     children: 'Link that looks like a button',
     variant: 'primary',
+  },
+}
+export const Link: Story = {
+  args: {
+    as: 'a',
+    children: 'Link that looks like a button',
+    variant: 'link',
   },
 }
