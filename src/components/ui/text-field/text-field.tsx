@@ -1,25 +1,84 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
+import {ComponentPropsWithoutRef, ElementType, forwardRef, useState} from 'react'
 
 import clsx from 'clsx'
 
 import s from './text-field.module.scss'
 
-export type TextFieldProps<T extends ElementType = 'input'> = {
-  as?: T
-  errorMessage?: string
+export type TextFieldProps = {
+  type?: 'search' | 'text' | 'password'
   label?: string
-  variant?: 'icon' | 'link' | 'primary' | 'secondary' | 'tertiary'
-} & ComponentPropsWithoutRef<T>
+  errorMessage?: string
+  clearField?: () => void
+} & ComponentPropsWithoutRef<'input'>
 
-export const TextField = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
-  const {
-    as: Component = 'button',
-    className,
-    fullWidth: fullWidth,
-    variant = 'primary',
-    ...rest
-  } = props
-  const classNameVar = clsx(s.button, s[variant], fullWidth && s.fullWidth, className)
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>({
+  type = 'text',
+  errorMessage,
+  className,
+  clearField,
+  label, ...rest
+}, ref)
+=>
+{
+  const [showPassword, setShowPassword] = useState(false)
+  const isPasswordType = type === 'password'
 
-  return <Component className={classNameVar} {...rest} />
+  const isSearchType = type === 'search'
+
+  const displayClearButton = isSearchType && clearField && rest.value
+
+  const finalType = getFinalType(type, showPassword)
+
+  const passwordHandler = () => setShowPassword(prev => !prev)
+
+  const classes = {
+    root: clsx(s.root, className),
+    label: clsx(s.label, rest.disabled && s.disabled),
+    input: clsx(s.input, isSearchType && s.search, errorMessage && s.error),
+    searchIcon: clsx(s.searchIcon, rest.disabled && s.disabledIcon),
+  }
+
+  return (
+    <div className={classes.root}>
+      <Typography as={'label'} variant="body2" className={classes.label}>
+        {label}
+        <div className={s.container}>
+          <input
+            className={classes.input}
+            type={isPasswordType ? finalType : 'text'}
+            ref={ref}
+            {...rest}
+          />
+          {isPasswordType && (
+            <button
+              type="button"
+              className={s.button}
+              onClick={passwordHandler}
+              disabled={rest.disabled}
+            >
+              {showPassword ? <Icon name="eyeOff"/> : <Icon name="eye"/>}
+            </button>
+          )}
+          {isSearchType && (
+            <Icon name="search" width={20} height={20} className={classes.searchIcon}/>
+          )}
+          {displayClearButton && (
+            <button
+              type="button"
+              className={s.button}
+              onClick={clearField}
+              disabled={rest.disabled}
+            >
+              <Icon name="cross" width={16} height={16}/>
+            </button>
+          )}
+        </div>
+      </Typography>
+      {!!errorMessage && (
+        <Typography variant="caption" className={s.errorMessage}>
+          {errorMessage}
+        </Typography>
+      )}
+    </div>
+  )
 }
