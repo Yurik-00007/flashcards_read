@@ -47,7 +47,7 @@ export const Checkbox = (props: CheckboxProps) => {
       </div>
       {label && (
         <LabelRadix.Root asChild>
-          <Typography as={'div'} className={classNameVar.label} variant={'body2'}>
+          <Typography as={'label'} className={classNameVar.label} variant={'body2'}>
             {label}
           </Typography>
         </LabelRadix.Root>

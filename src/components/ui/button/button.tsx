@@ -12,7 +12,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
 } & ComponentPropsWithoutRef<T>
 
 /*
-export const Button = ({
+export const TextField = ({
   as: Component = 'button',
   className,
   fullWidth,

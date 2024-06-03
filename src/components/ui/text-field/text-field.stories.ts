@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Button } from './'
+import { TextField } from './'
 
 const meta = {
   argTypes: {
@@ -9,10 +9,10 @@ const meta = {
       options: ['primary', 'secondary', 'tertiary', 'link'],
     },
   },
-  component: Button,
+  component: TextField,
   tags: ['autodocs'],
   title: 'Components/UI/TextField',
-} satisfies Meta<typeof Button>
+} satisfies Meta<typeof TextField>
 
 export default meta
 type Story = StoryObj<typeof meta>
