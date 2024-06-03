@@ -5,7 +5,6 @@
 }
 
 .label {
-  //@include flex(row, center, center, 0, 0);
   @include flex;
 
   cursor: pointer;
@@ -43,7 +42,7 @@
 }
 
 .buttonWrapper {
-  @include flex;
+  @include flex(row, space-around);
 
   cursor: pointer;
   width: 36px;

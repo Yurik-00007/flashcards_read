@@ -20,35 +20,38 @@ export type CheckboxProps = {
 export const Checkbox = (props: CheckboxProps) => {
   const { checked, className, disabled, id, label, onChange, position, required } = props
   const classNameVar = {
-    buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled, position === 'left' && s.left),
+    buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
     container: clsx(s.container, className),
     indicator: s.indicator,
-    label: clsx(s.label, disabled && s.disabled),
+    label: clsx(s.label, disabled && s.disabled, position === 'left' && s.left),
     root: s.root,
   }
 
   return (
     <div className={classNameVar.container}>
-      <LabelRadix.Root asChild>
-        <Typography as={'label'} className={classNameVar.label} variant={'body2'}>
-          <div className={classNameVar.buttonWrapper}>
-            <CheckboxRadix.Root
-              checked={checked}
-              className={classNameVar.root}
-              disabled={disabled}
-              id={id}
-              onCheckedChange={onChange}
-              required={required}
-            >
-              {checked && (
-                <CheckboxRadix.Indicator>
-                  <Check />
-                </CheckboxRadix.Indicator>
-              )}
-            </CheckboxRadix.Root>
-          </div>
-        </Typography>
-      </LabelRadix.Root>
+      <div className={classNameVar.buttonWrapper}>
+        <CheckboxRadix.Root
+          checked={checked}
+          className={classNameVar.root}
+          disabled={disabled}
+          id={id}
+          onCheckedChange={onChange}
+          required={required}
+        >
+          {checked && (
+            <CheckboxRadix.Indicator>
+              <Check />
+            </CheckboxRadix.Indicator>
+          )}
+        </CheckboxRadix.Root>
+      </div>
+      {label && (
+        <LabelRadix.Root asChild>
+          <Typography as={'div'} className={classNameVar.label} variant={'body2'}>
+            {label}
+          </Typography>
+        </LabelRadix.Root>
+      )}
     </div>
   )
 }
